@@ -37,3 +37,16 @@ class ModuleImage(models.Model):
 class ModuleFile(models.Model):
     module = models.ForeignKey(Module, on_delete=models.CASCADE, related_name='files')
     file = models.FileField(upload_to='course/files')
+
+class Test(models.Model):
+    name = models.CharField(max_length=255)
+    module = models.ForeignKey(Module, on_delete=models.CASCADE, related_name='tests')
+
+class Question(models.Model):
+    description = models.CharField(max_length=255)
+    test = models.ForeignKey(Test, on_delete=models.CASCADE, related_name='questions')
+
+class Answer(models.Model):
+    description = models.CharField(max_length=255)
+    correction = models.BooleanField(default=False)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='answers')
